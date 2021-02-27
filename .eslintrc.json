@@ -1,0 +1,11 @@
+{
+  "extends": ["airbnb-typescript/base"],
+  "parserOptions": {
+    "project": "/Users/ryanmalesic/Developer/projects/kcm-sls/kcm-api/tsconfig.json"
+  },
+  "rules": {
+    "no-console":"off",
+    "no-new": "off",
+    "import/prefer-default-export": "off"
+  }
+}
