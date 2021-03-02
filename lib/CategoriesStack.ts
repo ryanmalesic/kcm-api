@@ -18,6 +18,7 @@ export default class CategoriesStack extends sst.Stack {
           allowedMethods: [s3.HttpMethods.PUT],
         },
       ],
+      encryption: s3.BucketEncryption.KMS,
     });
 
     // Create the DynamoDB Table
