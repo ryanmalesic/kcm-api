@@ -26,13 +26,13 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
     new PutObjectCommand({
       Bucket: process.env.BOOKS,
       Key: fileName,
-    }),
+    })
   );
 
   const signedUrl = formatUrl(
     await signedRequest.presign(request, {
       expiresIn: 60 * 60 * 24,
-    }),
+    })
   );
 
   return {

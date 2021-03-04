@@ -2,21 +2,25 @@ import { AttributeValue, QueryCommandOutput } from '@aws-sdk/client-dynamodb';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 
-export const toBase64 = (str: string): string => Buffer.from(str, 'utf-8').toString('base64');
+export const toBase64 = (str: string): string =>
+  Buffer.from(str, 'utf-8').toString('base64');
 
-export const fromBase64 = (str: string): string => Buffer.from(str, 'base64').toString('utf-8');
+export const fromBase64 = (str: string): string =>
+  Buffer.from(str, 'base64').toString('utf-8');
 
-export const toCursor = (obj: { [key: string]: string }): string => toBase64(
-  Object.keys(obj).reduce((prev, curr) => {
-    if (prev.length === 0) {
-      return obj[curr];
-    }
+export const toCursor = (obj: { [key: string]: string }): string =>
+  toBase64(
+    Object.keys(obj).reduce((prev, curr) => {
+      if (prev.length === 0) {
+        return obj[curr];
+      }
 
-    return `${prev}$${obj[curr]}`;
-  }, ''),
-);
+      return `${prev}$${obj[curr]}`;
+    }, '')
+  );
 
-export const fromCursor = (cursor: string): string[] => fromBase64(cursor).split('$');
+export const fromCursor = (cursor: string): string[] =>
+  fromBase64(cursor).split('$');
 
 type D = {
   Pk?: string;
@@ -34,7 +38,7 @@ export type MarshalledDItem<T extends D> = {
 export type MarshalledDItems<T extends D> = MarshalledDItem<T>[];
 
 export function formatMarshalledDItem<T extends D, R extends I>(
-  marshalledDItem: MarshalledDItem<T>,
+  marshalledDItem: MarshalledDItem<T>
 ): R {
   const unmarshalledDItem = unmarshall(marshalledDItem) as T;
 
@@ -61,14 +65,14 @@ export function formatMarshalledDItem<T extends D, R extends I>(
 }
 
 export function formatMarshalledDItems<T extends D, R extends I>(
-  marshalledDItems: MarshalledDItems<T>,
+  marshalledDItems: MarshalledDItems<T>
 ): R[] {
   return marshalledDItems.map(formatMarshalledDItem) as R[];
 }
 
 export function createResponse<T extends D, R extends I>(
   event: APIGatewayProxyEventV2,
-  queryCommandOutput: QueryCommandOutput,
+  queryCommandOutput: QueryCommandOutput
 ): APIGatewayProxyResultV2 {
   const items = (queryCommandOutput.Items ?? []) as MarshalledDItems<T>;
   const item = items[0];
@@ -87,10 +91,10 @@ export function createResponse<T extends D, R extends I>(
 
 export function createPaginatedResponse<T extends D, R extends I>(
   event: APIGatewayProxyEventV2,
-  queryCommandOutput: QueryCommandOutput,
+  queryCommandOutput: QueryCommandOutput
 ): APIGatewayProxyResultV2 {
   const items = formatMarshalledDItems<T, R>(
-    (queryCommandOutput.Items ?? []) as MarshalledDItems<T>,
+    (queryCommandOutput.Items ?? []) as MarshalledDItems<T>
   );
 
   if (!queryCommandOutput.LastEvaluatedKey) {
@@ -112,7 +116,7 @@ export function createPaginatedResponse<T extends D, R extends I>(
 
       return `${prev}&${curr}=${queryStringParamaters[curr]}`;
     },
-    `?cursor=${cursor}`,
+    `?cursor=${cursor}`
   );
 
   const linkHeader = `<https://${event.requestContext.domainName}${event.rawPath}${queryString}>; rel="next"`;

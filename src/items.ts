@@ -140,9 +140,8 @@ export type Item = {
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
   const { bookId } = event.pathParameters ?? {};
-  const {
-    classDesc, itemCode, upc, cursor, limit, sort,
-  } = event.queryStringParameters ?? {};
+  const { classDesc, itemCode, upc, cursor, limit, sort } =
+    event.queryStringParameters ?? {};
 
   if (!bookId && !classDesc && !itemCode && !upc) {
     return {
@@ -168,7 +167,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
           cursor,
           limit,
           sort,
-        }),
+        })
       );
     }
 
@@ -182,7 +181,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
           cursor,
           limit,
           sort,
-        }),
+        })
       );
     }
 
@@ -195,7 +194,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
         cursor,
         limit,
         sort,
-      }),
+      })
     );
   } catch (error) {
     console.log('ERROR OCCURRED IN QUERY', error.message);

@@ -80,7 +80,7 @@ const batchPutItems = async (items: WriteRequest[]): Promise<void> => {
 };
 
 export async function handler(
-  event: S3CreateEvent,
+  event: S3CreateEvent
 ): Promise<APIGatewayProxyResultV2> {
   console.log(`Event received: ${JSON.stringify(event)}`);
 
@@ -102,7 +102,7 @@ export async function handler(
       relaxColumnCount: true,
       // toLine: 10, // Uncomment for testing (won't blow up logs)
       trim: true,
-    }),
+    })
   );
 
   const classDescs = new Set();
@@ -144,7 +144,7 @@ export async function handler(
           console.log(
             'ERROR OCCURRED IN BATCHPUTITEMS',
             error.message,
-            JSON.stringify(itemsToPut),
+            JSON.stringify(itemsToPut)
           );
           return {};
         }
@@ -159,7 +159,7 @@ export async function handler(
       console.log(
         'ERROR OCCURRED IN BATCHPUTITEMS',
         error.message,
-        JSON.stringify(itemsToPut),
+        JSON.stringify(itemsToPut)
       );
       return {};
     }
@@ -194,7 +194,7 @@ export async function handler(
   const time = (end.getTime() - start.getTime()) / 1000;
 
   console.log(
-    `Book{RunDate=${runDate}}'s ${itemCount} items inserted in ${time} seconds.`,
+    `Book{RunDate=${runDate}}'s ${itemCount} items inserted in ${time} seconds.`
   );
 
   return {};

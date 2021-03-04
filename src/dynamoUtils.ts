@@ -17,7 +17,7 @@ interface GetItemsFromClassDescProps {
 }
 
 async function getItemsFromClassDesc(
-  props: GetItemsFromClassDescProps,
+  props: GetItemsFromClassDescProps
 ): Promise<QueryCommandOutput> {
   const queryParams: QueryInput = {
     ExpressionAttributeNames: { '#Pk': 'Pk', '#Sk': 'Sk' },
@@ -48,7 +48,7 @@ interface GetItemsFromItemCodeProps {
 }
 
 export async function getItemsFromItemCode(
-  props: GetItemsFromItemCodeProps,
+  props: GetItemsFromItemCodeProps
 ): Promise<QueryCommandOutput> {
   const queryParams: QueryInput = {
     ExpressionAttributeNames: { '#ItemCode': 'ItemCode' },
@@ -72,7 +72,7 @@ export async function getItemsFromItemCode(
       ...queryCommandOutput,
       Items:
         queryCommandOutput.Items?.filter(
-          (item) => item.RunDate.S === props.runDate,
+          (item) => item.RunDate.S === props.runDate
         ) ?? [],
     };
   }
@@ -89,7 +89,7 @@ interface GetItemsFromUpcProps {
 }
 
 export async function getItemsFromUpc(
-  props: GetItemsFromUpcProps,
+  props: GetItemsFromUpcProps
 ): Promise<QueryCommandOutput> {
   const queryParams: QueryInput = {
     ExpressionAttributeNames: { '#Upc': 'Upc' },
@@ -113,7 +113,7 @@ export async function getItemsFromUpc(
       ...queryCommandOutput,
       Items:
         queryCommandOutput.Items?.filter(
-          (item) => item.RunDate.S === props.runDate,
+          (item) => item.RunDate.S === props.runDate
         ) ?? [],
     };
   }
@@ -132,7 +132,7 @@ interface GetItemsProps {
 }
 
 export async function getItems(
-  props: GetItemsProps,
+  props: GetItemsProps
 ): Promise<QueryCommandOutput> {
   if (props.classDesc) {
     return getItemsFromClassDesc({

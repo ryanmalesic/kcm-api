@@ -54,11 +54,11 @@ export default class CategoriesStack extends sst.Stack {
     // Add book object created trigger for parse function
     bucket.addObjectCreatedNotification(
       new s3n.LambdaDestination(parseFunction),
-      { suffix: '.csv' },
+      { suffix: '.csv' }
     );
     bucket.addObjectCreatedNotification(
       new s3n.LambdaDestination(parseFunction),
-      { suffix: '.CSV' },
+      { suffix: '.CSV' }
     );
 
     // Create the HTTP Api

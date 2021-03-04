@@ -24,9 +24,7 @@ export type Book = {
 };
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
-  const {
-    runDate, cursor, limit, sort,
-  } = event.queryStringParameters ?? {};
+  const { runDate, cursor, limit, sort } = event.queryStringParameters ?? {};
 
   // Setup query params
   const queryParams: QueryInput = {
